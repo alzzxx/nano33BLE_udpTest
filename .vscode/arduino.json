@@ -1,0 +1,5 @@
+{
+    "sketch": "nano33BLE_udpTest.ino",
+    "board": "arduino:mbed:nano33ble",
+    "port": "COM24"
+}

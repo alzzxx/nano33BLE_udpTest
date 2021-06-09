@@ -1,0 +1,23 @@
+{
+    "configurations": [
+        {
+            "name": "Win32",
+            "includePath": [
+                "C:\\Users\\a.rondon\\AppData\\Local\\Arduino15\\packages\\arduino\\tools\\**",
+                "C:\\Users\\a.rondon\\Documents\\Arduino\\libraries\\**",
+                "C:\\Program Files (x86)\\Arduino\\libraries\\**",
+                "C:\\Users\\a.rondon\\AppData\\Local\\Arduino15\\packages\\arduino\\hardware\\mbed\\1.3.2\\**"
+            ],
+            "forcedInclude": [
+                "C:\\Users\\a.rondon\\AppData\\Local\\Arduino15\\packages\\arduino\\hardware\\mbed\\1.3.2\\cores\\arduino\\Arduino.h"
+            ],
+            "defines": [
+                "USBCON"
+            ],
+            "intelliSenseMode": "msvc-x64",
+            "cStandard": "c17",
+            "cppStandard": "c++17"
+        }
+    ],
+    "version": 4
+}
