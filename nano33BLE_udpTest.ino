@@ -7,18 +7,20 @@
 
 byte mac[] = {0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0xED}; // MAC address of arduino board
 unsigned int localPort = 8888;                     // Arduino local port
-unsigned int remotePort = 58769;                   // UDP port of remote PC
+unsigned int remotePort = 57892;                   // UDP port of remote PC
 char imageName[10] = "ImageNum_";                  // File name string
 char fileName[15];                                 // char to be sent to PC
 int n = 0;                                         // number of image sent
+byte deviceStatus[1] = {0xFF};
 
 IPAddress ip(192, 168, 1, 10);            // ip address of arduino board
 IPAddress subnet(255, 255, 255, 0);       // subnet for arduino
-IPAddress remote(192, 168, 1, 80);        // ip address of PC
+IPAddress remote(192, 168, 1, 100);       // ip address of PC
 IPAddress remotesubnet(255, 255, 255, 0); // subnet for pc
 
 EthernetUDP Udp;
 bool shieldStart(void);
+void writeUDP(uint8_t *buffer, uint16_t size, IPAddress targetIP, uint16_t targetPort);
 
 void setup()
 {
@@ -45,6 +47,10 @@ void loop()
     Serial.print("Send packet called: ");
     Serial.println(fileName);
     n++;
+    delay(1000);
+    Serial.println("Now i'm using the other function");
+    writeUDP(deviceStatus, sizeof(deviceStatus), remote, remotePort);
+    Serial.println("Done with the other function");
     delay(1000);
 }
 
@@ -143,4 +149,33 @@ bool shieldStart(void)
         Serial.println("Dude, there is something wrong with the shield :(");
     }
     return shieldOK;
+}
+
+void writeUDP(uint8_t *buffer, uint16_t size, IPAddress targetIP, uint16_t targetPort)
+{
+    /*
+    Builds a UDP packet containing the elements of the byte array Buffer and sends it to 
+    the device identified by targetIP and targetPort input parameters
+    */
+    Serial.println(F("Preparing UDP packet"));
+    Udp.beginPacket(targetIP, targetPort);
+    Serial.println(F("Sending packet"));
+    Udp.write(buffer, size);
+    Serial.println(F("Closing packet"));
+    Udp.endPacket();
+    Serial.println(F("DONE udp"));
+
+    Serial.print(F("Sent packet of size: "));
+    Serial.println(size);
+    Serial.print(F("To "));
+    for (uint8_t i = 0; i < 4; i++)
+    {
+        Serial.print(targetIP[i], DEC);
+        if (i < 3)
+        {
+            Serial.print(F("."));
+        }
+    }
+    Serial.print(F(", port "));
+    Serial.println(targetPort);
 }
