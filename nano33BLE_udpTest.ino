@@ -6,17 +6,19 @@
 #define ET_PIN_HI digitalWrite(ET_PIN_NSS, HIGH)
 
 byte mac[] = {0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0xED}; // MAC address of arduino board
-unsigned int localPort = 8888;                     // Arduino local port
-unsigned int remotePort = 57892;                   // UDP port of remote PC
-char imageName[10] = "ImageNum_";                  // File name string
-char fileName[15];                                 // char to be sent to PC
-int n = 0;                                         // number of image sent
+const uint16_t serverPort = 80;
+unsigned int localPort = 8888;    // Arduino local port
+unsigned int remotePort = 57892;  // UDP port of remote PC
+char imageName[10] = "ImageNum_"; // File name string
+char fileName[15];                // char to be sent to PC
+int n = 0;                        // number of image sent
 byte deviceStatus[1] = {0xFF};
 
 IPAddress ip(192, 168, 1, 10);            // ip address of arduino board
 IPAddress subnet(255, 255, 255, 0);       // subnet for arduino
 IPAddress remote(192, 168, 1, 100);       // ip address of PC
 IPAddress remotesubnet(255, 255, 255, 0); // subnet for pc
+EthernetServer server(serverPort);
 
 EthernetUDP Udp;
 bool shieldStart(void);
